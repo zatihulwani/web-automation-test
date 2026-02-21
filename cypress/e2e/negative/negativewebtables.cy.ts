@@ -15,7 +15,7 @@ describe("Web Tables Registration Test", () => {
   const page = new WebTablesPage();
   let csvData: UserData[] = [];
 
-  // ================= LOAD CSV =================
+ 
   before(() => {
     cy.readFile("cypress/fixtures/users.csv").then((csvFile) => {
 
@@ -28,20 +28,18 @@ describe("Web Tables Registration Test", () => {
     });
   });
 
-  // ================= OPEN PAGE =================
   beforeEach(() => {
     cy.visit("/", { failOnStatusCode: false }); 
     cy.contains("Elements").click(); 
     cy.contains("Web Tables").click();
 
-    // remove ads iframe
     cy.window().then((win) => {
       const ads = win.document.querySelectorAll("iframe");
       ads.forEach((el) => el.remove());
     });
   });
 
-  // ================= NEGATIVE =================
+
   describe("Negative Test Cases", () => {
 
     it("Email empty", () => {
@@ -59,10 +57,9 @@ describe("Web Tables Registration Test", () => {
 
       page.submitForm();
 
-      // form tidak boleh close
+  
     cy.get('[role="dialog"]').should("be.visible");
 
-      // email masih kosong
       cy.get("#userEmail").should("have.value", "");
 
     });
@@ -78,10 +75,10 @@ it("Age invalid", () => {
 
   page.submitForm();
 
-  // Clear field kalau form tidak auto-clear
+
   cy.get("#age").clear().should("have.value", "");
 });
 
-  });
+});
 
 });

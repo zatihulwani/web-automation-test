@@ -1,24 +1,19 @@
-// ========================================
-// Cypress Support File
-// ========================================
-
 import "./commands";
 import '@4tw/cypress-drag-drop';
 
-// Disable uncaught exception handling untuk error tertentu
+
 Cypress.on("uncaught:exception", (err, runnable) => {
-  // Return false untuk ignore error tertentu
-  // Return true untuk fail test
+
   return true;
 });
 
-// Custom error handling
+
 Cypress.on("fail", (error, runnable) => {
-  // Bisa tambahkan custom logic di sini
+
   throw error;
 });
 
-// Suppress console errors (opsional)
+
 const app = window.top;
 
 if (!app?.document.head.querySelector("[data-hide-command-log-request]")) {

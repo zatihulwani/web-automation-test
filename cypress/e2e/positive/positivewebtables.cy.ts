@@ -15,7 +15,6 @@ describe("Web Tables Registration Test", () => {
   const page = new WebTablesPage();
   let csvData: UserData[] = [];
 
-  // ================= LOAD CSV =================
   before(() => {
     cy.readFile("cypress/fixtures/users.csv").then((csvFile) => {
 
@@ -28,20 +27,20 @@ describe("Web Tables Registration Test", () => {
     });
   });
 
-  // ================= OPEN PAGE =================
+
   beforeEach(() => {
     cy.visit("/", { failOnStatusCode: false }); 
     cy.contains("Elements").click(); 
     cy.contains("Web Tables").click();
 
-    // remove ads iframe
+
     cy.window().then((win) => {
       const ads = win.document.querySelectorAll("iframe");
       ads.forEach((el) => el.remove());
     });
   });
 
-  // ================= POSITIVE =================
+
   describe("Positive Test Cases", () => {
 
     it("Register multiple users from CSV", () => {
@@ -66,13 +65,13 @@ describe("Web Tables Registration Test", () => {
         cy.get('[role="dialog"]').should("not.exist");
         cy.wait(800);
       
-        // remove ads lagi (demoqa sering inject ulang)
+      
         cy.window().then((win) => {
           const ads = win.document.querySelectorAll("iframe");
           ads.forEach((el) => el.remove());
         });
 
-        // verify user
+     
         page.verifyUserWithPagination(
           user.firstName,
           user.lastName,

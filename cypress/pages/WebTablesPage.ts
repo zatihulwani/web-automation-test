@@ -1,10 +1,5 @@
-/**
- * Page Object Model untuk halaman Web Tables
- * URL: https://demoqa.com/webtables
- */
 
 export class WebTablesPage {
-  // ==================== SELECTORS ====================
 
   private addButton = "button:contains('Add')";
   private firstNameInput = "#firstName";
@@ -22,18 +17,10 @@ export class WebTablesPage {
   private nextButton = 'button:contains("Next")';
  
 
-  // ==================== METHODS ====================
-
-  /**
-   * Click tombol Add untuk membuka form registrasi
-   */
   clickAddButton() {
     cy.contains("button", "Add").click();
   }
 
-  /**
-   * Isi form registrasi dengan data user
-   */
   fillForm(data: {
     firstName?: string;
     lastName?: string;
@@ -63,18 +50,10 @@ export class WebTablesPage {
 }
   
 
-  /**
-   * Submit form registrasi
-   */
   submitForm() {
     cy.get(this.submitButton).click();
   }
 
-// ================= VALIDATION =================
-
-  // waitForModalClose() {
-  //   cy.get(this.modalDialog).should("not.exist");
-  // }
   waitForModalClose() {
   cy.get("body").then(($body) => {
     if ($body.find("[role='dialog']").length > 0) {
@@ -87,22 +66,11 @@ export class WebTablesPage {
     cy.get(this.modalDialog).should("be.visible");
   }
 
-// verifyUserInTable(firstName: string, lastName: string, email: string) {
-
-//   cy.get("body").then(($body) => {
-
-//     cy.contains(firstName, { timeout: 10000 }).should("exist");
-//     cy.contains(lastName).should("exist");
-//     cy.contains(email).should("exist");
-
-//   });
-
-// }
 verifyUserWithPagination(firstName: string, lastName: string, email: string) {
 
   cy.get("body").then(($body) => {
 
-    // cek apakah user ada di page sekarang
+  
     if ($body.text().includes(firstName)) {
 
       cy.contains(firstName).should("exist");
@@ -111,20 +79,20 @@ verifyUserWithPagination(firstName: string, lastName: string, email: string) {
 
     } else {
 
-      // klik next page jika ada
+
       cy.get(this.nextButton).then(($next) => {
 
-        // jika tombol next disabled → user tidak ada
+
         if ($next.is(":disabled")) {
           throw new Error("User not found in any page");
         }
 
-        // klik next
+
         cy.wrap($next).click();
 
         cy.wait(500);
 
-        // cek ulang (recursion)
+
         this.verifyUserWithPagination(firstName, lastName, email);
 
       });
@@ -137,34 +105,19 @@ verifyUserWithPagination(firstName: string, lastName: string, email: string) {
       
 
 
-
-
-
-  /**
-   * Close modal dialog
-   */
   closeModal() {
     cy.get(this.closeButton).click();
   }
 
-  
-  /**
-   * Cek apakah error message muncul
-   */
+
   hasValidationError(fieldName: string) {
     return cy.contains(fieldName).parent().find(".invalid-feedback");
   }
 
-  /**
-   * Cek jumlah row di table
-   */
   getTableRowCount() {
     return cy.get(this.tableRows).its("length");
   }
 
-  /**
-   * Search user di table
-   */
   searchUser(keyword: string) {
     cy.get('input[placeholder="Type to search"]').type(keyword);
   }

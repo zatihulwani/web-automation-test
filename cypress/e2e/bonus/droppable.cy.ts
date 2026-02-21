@@ -1,4 +1,4 @@
-// cypress/e2e/positive/droppable.cy.ts
+
 import { DroppablePage } from "../../pages/DroppablePage";
 
 describe("Positive Test - Droppable Success", () => {
@@ -12,7 +12,6 @@ describe("Positive Test - Droppable Success", () => {
 
     droppablePage.verifyPageLoaded();
 
-    // Hapus elemen yang sering menutupi layar atau bikin lambat (Header/Ads)
   cy.get('header').invoke('remove');
   cy.get('#adplus-anchor').invoke('remove');
   cy.get('footer').invoke('remove');
@@ -23,16 +22,14 @@ describe("Positive Test - Droppable Success", () => {
     it("BTC-001: Drag & drop element berhasil", () => {
       cy.log("🔄 Test: Drag and Drop Simple");
 
-      // Verifikasi elemen drag ada
       droppablePage.getDragElement().should("be.visible");
       droppablePage.getDropTarget().should("be.visible");
 
-      cy.log("✅ Elements found, starting drag and drop");
+      cy.log("Elements found, starting drag and drop");
 
-      // Lakukan drag and drop
       droppablePage.dragAndDropReal();
 
-      cy.log("✅ Drag and drop action completed");
+      cy.log("Drag and drop action completed");
 
       // Verifikasi success - check apakah text berubah
       cy.get("#simpleDropContainer #droppable", { timeout: 15000 }).then(($el) => {
@@ -47,7 +44,7 @@ describe("Positive Test - Droppable Success", () => {
         expect(hasDropped || hasDropHere).to.be.true;
       });
 
-      cy.log("✅ Verification complete - Drop successful!");
+      cy.log("Verification complete - Drop successful!");
     });
 });
   
